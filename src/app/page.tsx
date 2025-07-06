@@ -1,103 +1,252 @@
-import Image from "next/image";
+'use client';
+
+import React, { useState, useEffect } from 'react';
+
+interface WordData {
+  kanji: string;
+  hiragana: string;
+  korean: string;
+  original: any;
+}
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [words, setWords] = useState<WordData[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [completedWords, setCompletedWords] = useState<Set<number>>(new Set());
+  const [showHiragana, setShowHiragana] = useState(false);
+  const [showKorean, setShowKorean] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('/data.json');
+      const data = await response.json();
+      
+      // 데이터 파싱 및 필터링
+      const processedWords = data
+        .filter((item: any) => {
+          try {
+            const content = JSON.parse(item.content);
+            return content.entry && 
+                   content.entry.members && 
+                   content.entry.members.length > 0 &&
+                   content.entry.members[0].kanji &&
+                   content.entry.members[0].entry_name &&
+                   content.entry.means &&
+                   content.entry.means.length > 0;
+          } catch (e) {
+            return false;
+          }
+        })
+        .map((item: any) => {
+          const content = JSON.parse(item.content);
+          const member = content.entry.members[0];
+          const mean = content.entry.means[0];
+          
+          return {
+            kanji: member.kanji,
+            hiragana: member.entry_name,
+            korean: mean.show_mean,
+            original: item
+          };
+        });
+
+      setWords(processedWords);
+      setIsLoading(false);
+    } catch (error) {
+      console.error('데이터 로딩 중 오류:', error);
+      setError('데이터를 불러오는 중 오류가 발생했습니다.');
+      setIsLoading(false);
+    }
+  };
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    switch(e.key) {
+      case 'ArrowLeft':
+        previousWord();
+        break;
+      case 'ArrowRight':
+        nextWord();
+        break;
+      case 'h':
+      case 'H':
+        showHiraganaAnswer();
+        break;
+      case 'k':
+      case 'K':
+        showKoreanAnswer();
+        break;
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [currentIndex]);
+
+  const showHiraganaAnswer = () => {
+    setShowHiragana(true);
+    setShowKorean(false);
+    markAsCompleted();
+  };
+
+  const showKoreanAnswer = () => {
+    setShowKorean(true);
+    setShowHiragana(false);
+    markAsCompleted();
+  };
+
+  const hideAnswers = () => {
+    setShowHiragana(false);
+    setShowKorean(false);
+  };
+
+  const previousWord = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+      hideAnswers();
+    }
+  };
+
+  const nextWord = () => {
+    if (currentIndex < words.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+      hideAnswers();
+    }
+  };
+
+  const markAsCompleted = () => {
+    setCompletedWords(prev => new Set([...prev, currentIndex]));
+  };
+
+  const resetProgress = () => {
+    setCurrentIndex(0);
+    setCompletedWords(new Set());
+    hideAnswers();
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
+        <div className="text-white text-2xl">로딩 중...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
+        <div className="text-red-400 text-xl">{error}</div>
+      </div>
+    );
+  }
+
+  const currentWord = words[currentIndex];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-600 to-blue-600">
+      <div className="max-w-4xl mx-auto p-5 min-h-screen flex flex-col">
+        {/* Header */}
+        <header className="text-center mb-8">
+          <h1 className="text-white text-4xl md:text-5xl font-bold mb-6 drop-shadow-lg">
+            한자 단어장 암기 시스템
+          </h1>
+          <div className="flex justify-center items-center gap-5 mb-4">
+            <button
+              onClick={previousWord}
+              disabled={currentIndex === 0}
+              className="bg-white/20 border-2 border-white/30 text-white px-5 py-2 rounded-full hover:bg-white/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              이전
+            </button>
+            <span className="text-white text-xl font-bold">
+              {currentIndex + 1} / {words.length}
+            </span>
+            <button
+              onClick={nextWord}
+              disabled={currentIndex === words.length - 1}
+              className="bg-white/20 border-2 border-white/30 text-white px-5 py-2 rounded-full hover:bg-white/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              다음
+            </button>
+          </div>
+        </header>
+
+        {/* Main Content */}
+        <main className="flex-1 flex items-center justify-center">
+          <div className="bg-white rounded-3xl p-10 shadow-2xl max-w-2xl w-full min-h-[500px] flex flex-col justify-between">
+            {/* Kanji Display */}
+            <div className="text-center mb-8">
+              <div className="text-8xl md:text-9xl font-bold text-gray-800 mb-8 min-h-[120px] flex items-center justify-center drop-shadow-lg">
+                {currentWord?.kanji || '데이터가 없습니다'}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-4 justify-center mb-8 flex-wrap">
+              <button
+                onClick={showHiraganaAnswer}
+                disabled={showHiragana}
+                className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-lg transform hover:-translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              >
+                히라가나 보기
+              </button>
+              <button
+                onClick={showKoreanAnswer}
+                disabled={showKorean}
+                className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-lg transform hover:-translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              >
+                한글 보기
+              </button>
+            </div>
+
+            {/* Answers */}
+            <div className="mb-8">
+              {showHiragana && currentWord && (
+                <div className="bg-gray-50 rounded-2xl p-6 mb-4 border-l-4 border-purple-500 animate-slideIn">
+                  <h3 className="text-purple-600 text-xl font-bold mb-3">히라가나</h3>
+                  <div className="text-2xl text-gray-800">{currentWord.hiragana}</div>
+                </div>
+              )}
+              
+              {showKorean && currentWord && (
+                <div className="bg-gray-50 rounded-2xl p-6 mb-4 border-l-4 border-purple-500 animate-slideIn">
+                  <h3 className="text-purple-600 text-xl font-bold mb-3">한글 뜻</h3>
+                  <div className="text-xl text-gray-800 leading-relaxed">{currentWord.korean}</div>
+                </div>
+              )}
+            </div>
+
+            {/* Navigation */}
+            <div className="text-center">
+              <button
+                onClick={resetProgress}
+                className="bg-red-500 text-white px-6 py-3 rounded-full hover:bg-red-600 transition-all"
+              >
+                다시 시작
+              </button>
+            </div>
+          </div>
+        </main>
+
+        {/* Footer */}
+        <footer className="mt-8 text-center">
+          <div className="bg-white/10 rounded-2xl p-4 text-white flex justify-around flex-wrap gap-4">
+            <span className="text-lg font-bold">
+              총 단어: {words.length}
+            </span>
+            <span className="text-lg font-bold">
+              학습 완료: {completedWords.size}
+            </span>
+          </div>
+        </footer>
+      </div>
     </div>
   );
-}
+} 
