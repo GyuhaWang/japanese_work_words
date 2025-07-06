@@ -1,12 +1,29 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+
+interface DataItem {
+  content: string;
+  [key: string]: unknown;
+}
+
+interface ContentEntry {
+  entry: {
+    members: Array<{
+      kanji: string;
+      entry_name: string;
+    }>;
+    means: Array<{
+      show_mean: string;
+    }>;
+  };
+}
 
 interface WordData {
   kanji: string;
   hiragana: string;
   korean: string;
-  original: any;
+  original: DataItem;
 }
 
 export default function Home() {
@@ -18,55 +35,41 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    loadData();
+  const showHiraganaAnswer = useCallback(() => {
+    setShowHiragana(true);
+    setShowKorean(false);
+    setCompletedWords(prev => new Set([...prev, currentIndex]));
+  }, [currentIndex]);
+
+  const showKoreanAnswer = useCallback(() => {
+    setShowKorean(true);
+    setShowHiragana(false);
+    setCompletedWords(prev => new Set([...prev, currentIndex]));
+  }, [currentIndex]);
+
+  const previousWord = useCallback(() => {
+    setCurrentIndex(prev => {
+      if (prev > 0) {
+        setShowHiragana(false);
+        setShowKorean(false);
+        return prev - 1;
+      }
+      return prev;
+    });
   }, []);
 
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
-      const response = await fetch('/data.json');
-      const data = await response.json();
-      
-      // 데이터 파싱 및 필터링
-      const processedWords = data
-        .filter((item: any) => {
-          try {
-            const content = JSON.parse(item.content);
-            return content.entry && 
-                   content.entry.members && 
-                   content.entry.members.length > 0 &&
-                   content.entry.members[0].kanji &&
-                   content.entry.members[0].entry_name &&
-                   content.entry.means &&
-                   content.entry.means.length > 0;
-          } catch (e) {
-            return false;
-          }
-        })
-        .map((item: any) => {
-          const content = JSON.parse(item.content);
-          const member = content.entry.members[0];
-          const mean = content.entry.means[0];
-          
-          return {
-            kanji: member.kanji,
-            hiragana: member.entry_name,
-            korean: mean.show_mean,
-            original: item
-          };
-        });
+  const nextWord = useCallback(() => {
+    setCurrentIndex(prev => {
+      if (prev < words.length - 1) {
+        setShowHiragana(false);
+        setShowKorean(false);
+        return prev + 1;
+      }
+      return prev;
+    });
+  }, [words.length]);
 
-      setWords(processedWords);
-      setIsLoading(false);
-    } catch (error) {
-      console.error('데이터 로딩 중 오류:', error);
-      setError('데이터를 불러오는 중 오류가 발생했습니다.');
-      setIsLoading(false);
-    }
-  };
-
-  const handleKeyDown = (e: KeyboardEvent) => {
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
     switch(e.key) {
       case 'ArrowLeft':
         previousWord();
@@ -83,52 +86,66 @@ export default function Home() {
         showKoreanAnswer();
         break;
     }
-  };
+  }, [previousWord, nextWord, showHiraganaAnswer, showKoreanAnswer]);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex]);
+  }, [handleKeyDown]);
 
-  const showHiraganaAnswer = () => {
-    setShowHiragana(true);
-    setShowKorean(false);
-    markAsCompleted();
-  };
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch('/data.json');
+        const data: DataItem[] = await response.json();
+        
+        // 데이터 파싱 및 필터링
+        const processedWords = data
+          .filter((item: DataItem) => {
+            try {
+              const content: ContentEntry = JSON.parse(item.content);
+              return content.entry && 
+                     content.entry.members && 
+                     content.entry.members.length > 0 &&
+                     content.entry.members[0].kanji &&
+                     content.entry.members[0].entry_name &&
+                     content.entry.means &&
+                     content.entry.means.length > 0;
+            } catch {
+              return false;
+            }
+          })
+          .map((item: DataItem) => {
+            const content: ContentEntry = JSON.parse(item.content);
+            const member = content.entry.members[0];
+            const mean = content.entry.means[0];
+            
+            return {
+              kanji: member.kanji,
+              hiragana: member.entry_name,
+              korean: mean.show_mean,
+              original: item
+            };
+          });
 
-  const showKoreanAnswer = () => {
-    setShowKorean(true);
-    setShowHiragana(false);
-    markAsCompleted();
-  };
+        setWords(processedWords);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('데이터 로딩 중 오류:', error);
+        setError('데이터를 불러오는 중 오류가 발생했습니다.');
+        setIsLoading(false);
+      }
+    };
 
-  const hideAnswers = () => {
-    setShowHiragana(false);
-    setShowKorean(false);
-  };
-
-  const previousWord = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-      hideAnswers();
-    }
-  };
-
-  const nextWord = () => {
-    if (currentIndex < words.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      hideAnswers();
-    }
-  };
-
-  const markAsCompleted = () => {
-    setCompletedWords(prev => new Set([...prev, currentIndex]));
-  };
+    loadData();
+  }, []);
 
   const resetProgress = () => {
     setCurrentIndex(0);
     setCompletedWords(new Set());
-    hideAnswers();
+    setShowHiragana(false);
+    setShowKorean(false);
   };
 
   if (isLoading) {
