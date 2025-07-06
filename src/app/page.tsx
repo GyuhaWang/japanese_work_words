@@ -2,28 +2,12 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 
-interface DataItem {
-  content: string;
-  [key: string]: unknown;
-}
-
-interface ContentEntry {
-  entry: {
-    members: Array<{
-      kanji: string;
-      entry_name: string;
-    }>;
-    means: Array<{
-      show_mean: string;
-    }>;
-  };
-}
-
 interface WordData {
+  id: number;
   kanji: string;
   hiragana: string;
   korean: string;
-  original: DataItem;
+  originalId: string;
 }
 
 export default function Home() {
@@ -97,39 +81,10 @@ export default function Home() {
     const loadData = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch('/data.json');
-        const data: DataItem[] = await response.json();
+        const response = await fetch('/words.json');
+        const data: WordData[] = await response.json();
         
-        // 데이터 파싱 및 필터링
-        const processedWords = data
-          .filter((item: DataItem) => {
-            try {
-              const content: ContentEntry = JSON.parse(item.content);
-              return content.entry && 
-                     content.entry.members && 
-                     content.entry.members.length > 0 &&
-                     content.entry.members[0].kanji &&
-                     content.entry.members[0].entry_name &&
-                     content.entry.means &&
-                     content.entry.means.length > 0;
-            } catch {
-              return false;
-            }
-          })
-          .map((item: DataItem) => {
-            const content: ContentEntry = JSON.parse(item.content);
-            const member = content.entry.members[0];
-            const mean = content.entry.means[0];
-            
-            return {
-              kanji: member.kanji,
-              hiragana: member.entry_name,
-              korean: mean.show_mean,
-              original: item
-            };
-          });
-
-        setWords(processedWords);
+        setWords(data);
         setIsLoading(false);
       } catch (error) {
         console.error('데이터 로딩 중 오류:', error);

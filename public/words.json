@@ -1,0 +1,345 @@
+[
+  {
+    "id": 1,
+    "kanji": "環境",
+    "hiragana": "かんきょう",
+    "korean": "환경.",
+    "originalId": "b0034fd7000c2d39547a08a7fe1bbcfc"
+  },
+  {
+    "id": 2,
+    "kanji": "処理",
+    "hiragana": "しょり",
+    "korean": "처리; 조처; 처분.",
+    "originalId": "71aa669de03557f57ffe86aff94e0784"
+  },
+  {
+    "id": 3,
+    "kanji": "起動",
+    "hiragana": "きどう",
+    "korean": "기동; 시동(<ruby><rb>始動</rb><rp>(</rp><rt>しどう</rt><rp>)</rp></ruby>).",
+    "originalId": "cd3b29b5fe8ce9557218f2792f470ff5"
+  },
+  {
+    "id": 4,
+    "kanji": "有効",
+    "hiragana": "ゆうこう",
+    "korean": "유효.",
+    "originalId": "dec4325965615cf58521710093b5ba29"
+  },
+  {
+    "id": 5,
+    "kanji": "説明",
+    "hiragana": "せつめい",
+    "korean": "설명.",
+    "originalId": "87062e6098282eabd00cb86ae3e09cbe"
+  },
+  {
+    "id": 6,
+    "kanji": "開発",
+    "hiragana": "かいはつ",
+    "korean": "개발.",
+    "originalId": "4d93c0b11e175a4f387927b8237e6ade"
+  },
+  {
+    "id": 7,
+    "kanji": "設計",
+    "hiragana": "せっけい",
+    "korean": "설계.",
+    "originalId": "0695a20761395cdf1b222c7db2b7db45"
+  },
+  {
+    "id": 8,
+    "kanji": "追加",
+    "hiragana": "ついか",
+    "korean": "추가.",
+    "originalId": "108447efbef85b54b9ae0d03b352c02f"
+  },
+  {
+    "id": 9,
+    "kanji": "失敗",
+    "hiragana": "しっぱい",
+    "korean": "실패; 실수.",
+    "originalId": "fd91b4a4f40920bc9a0c8f1e6805da10"
+  },
+  {
+    "id": 10,
+    "kanji": "機能",
+    "hiragana": "きのう",
+    "korean": "기능.",
+    "originalId": "7470c382e84c4daabd2301bc65129ab3"
+  },
+  {
+    "id": 11,
+    "kanji": "格納",
+    "hiragana": "かくのう",
+    "korean": "격납; 넣어 둠.",
+    "originalId": "4bf782a38edd4da03ed3ce9f1445ae79"
+  },
+  {
+    "id": 12,
+    "kanji": "修正",
+    "hiragana": "しゅうせい",
+    "korean": "수정; 틀리거나 부족한 부분을 바로잡아 고치는 것.",
+    "originalId": "f5454826f7e547e47c23b64fddec47e7"
+  },
+  {
+    "id": 13,
+    "kanji": "画面",
+    "hiragana": "がめん",
+    "korean": "화면.",
+    "originalId": "5085e0bef10d6574f211cfb624f506f7"
+  },
+  {
+    "id": 14,
+    "kanji": "深刻",
+    "hiragana": "しんこく",
+    "korean": "심각(함).",
+    "originalId": "1eea8ae6f2a6861456cc0f99e9f73119"
+  },
+  {
+    "id": 15,
+    "kanji": "件数",
+    "hiragana": "けんすう",
+    "korean": "건수.",
+    "originalId": "ce0b9205bae9f313b7542f4bb9247e97"
+  },
+  {
+    "id": 16,
+    "kanji": "排除",
+    "hiragana": "はいじょ",
+    "korean": "배제; 제거.",
+    "originalId": "f1e8207be17359428b5a2bb6d139b33f"
+  },
+  {
+    "id": 17,
+    "kanji": "結果",
+    "hiragana": "けっか",
+    "korean": "결과.",
+    "originalId": "269777811736322e3939732439de1f60"
+  },
+  {
+    "id": 18,
+    "kanji": "保証",
+    "hiragana": "ほしょう",
+    "korean": "보증.",
+    "originalId": "9ba778b8c7ffc5b8fbb20ebbd1c47a4b"
+  },
+  {
+    "id": 20,
+    "kanji": "演算子",
+    "hiragana": "えんざんし",
+    "korean": "연산자.",
+    "originalId": "b1d23c535a2a33c52239da6f11fdf1a6"
+  },
+  {
+    "id": 21,
+    "kanji": "関数·函数",
+    "hiragana": "かんすう",
+    "korean": "함수.",
+    "originalId": "8075d0dfecd734ce7ecac534562642af"
+  },
+  {
+    "id": 22,
+    "kanji": "変換",
+    "hiragana": "へんかん",
+    "korean": "변환; 전환.",
+    "originalId": "2aa8dddaa7d518f517587bcafce626d8"
+  },
+  {
+    "id": 23,
+    "kanji": "複雑",
+    "hiragana": "ふくざつ",
+    "korean": "복잡(함).",
+    "originalId": "7a63b780c52c8e15cac47c7fe4849562"
+  },
+  {
+    "id": 24,
+    "kanji": "形式",
+    "hiragana": "けいしき",
+    "korean": "형식.",
+    "originalId": "c6525c5e05369e00a9eea0da57a35222"
+  },
+  {
+    "id": 25,
+    "kanji": "変数",
+    "hiragana": "へんすう",
+    "korean": "변수.",
+    "originalId": "4562c8f4f62253305a66876b728da7a2"
+  },
+  {
+    "id": 26,
+    "kanji": "条件",
+    "hiragana": "じょうけん",
+    "korean": "조건.",
+    "originalId": "9377421b51c361aced69e5026e122fbb"
+  },
+  {
+    "id": 27,
+    "kanji": "実行",
+    "hiragana": "じっこう",
+    "korean": "실행.",
+    "originalId": "24396e47333ea34e733686c6dea8cd9a"
+  },
+  {
+    "id": 28,
+    "kanji": "重要",
+    "hiragana": "じゅうよう",
+    "korean": "중요; 사물의 근본에 관계되는 일; 매우 소중한 일; 또, 그런 모양.",
+    "originalId": "9724ea06f4289b0b0ae4994fdd4c0523"
+  },
+  {
+    "id": 29,
+    "kanji": "検索",
+    "hiragana": "けんさく",
+    "korean": "검색.",
+    "originalId": "9d28ea69989ea8210dd1b1cdc819fce4"
+  },
+  {
+    "id": 30,
+    "kanji": "工数",
+    "hiragana": "こうすう",
+    "korean": "작업 순서의 단계 수; 공정수(<ruby><rb>工程</rb><rp>(</rp><rt>こうてい</rt><rp>)</rp></ruby><ruby><rb>數</rb><rp>(</rp><rt>すう</rt><rp>)</rp></ruby>).",
+    "originalId": "f28c7185c868c507032aa3affa1c701d"
+  },
+  {
+    "id": 31,
+    "kanji": "役割",
+    "hiragana": "やくわり",
+    "korean": "역할.",
+    "originalId": "3f8a57182154474766211971e9f95717"
+  },
+  {
+    "id": 32,
+    "kanji": "仕組(み)",
+    "hiragana": "しくみ",
+    "korean": "짜임새; 얼개.",
+    "originalId": "762a5a9e074ec65ee517d5ef718a3623"
+  },
+  {
+    "id": 33,
+    "kanji": "構成",
+    "hiragana": "こうせい",
+    "korean": "구성(물).",
+    "originalId": "6b5edc872b5c45c30152efbdb3ffd861"
+  },
+  {
+    "id": 34,
+    "kanji": "削除",
+    "hiragana": "さくじょ",
+    "korean": "삭제.",
+    "originalId": "e11964b65a60b42c983f791eff4aa7b8"
+  },
+  {
+    "id": 35,
+    "kanji": "区別",
+    "hiragana": "くべつ",
+    "korean": "구별; 다른 것과의 차이에 의해 나누어 지는 것; 또, 그 차이.",
+    "originalId": "18c5e5f7d00508679021c4d36dac5f7b"
+  },
+  {
+    "id": 36,
+    "kanji": "接続",
+    "hiragana": "せつぞく",
+    "korean": "접속.",
+    "originalId": "292c236fe79aa34f08187f814c7c2518"
+  },
+  {
+    "id": 37,
+    "kanji": "確認",
+    "hiragana": "かくにん",
+    "korean": "확인.",
+    "originalId": "3bf232d0310a3dc55f4c715a1ae157a9"
+  },
+  {
+    "id": 38,
+    "kanji": "設定",
+    "hiragana": "せってい",
+    "korean": "설정.",
+    "originalId": "2240bd9b386f63b7452773ac95916d54"
+  },
+  {
+    "id": 39,
+    "kanji": "記述",
+    "hiragana": "きじゅつ",
+    "korean": "기술; 문장으로 기록하여 서술함; 또, 그런 기록.",
+    "originalId": "e14d57b0af2da36719e7781395b1f9b2"
+  },
+  {
+    "id": 40,
+    "kanji": "別途",
+    "hiragana": "べっと",
+    "korean": "별도; 딴 방면; 다른 방법.",
+    "originalId": "59f9761124e44dbe6e6ec2a513cabbaa"
+  },
+  {
+    "id": 41,
+    "kanji": "種類",
+    "hiragana": "しゅるい",
+    "korean": "종류; 공통된 성질에 따라 분류하여 모은 것.",
+    "originalId": "8cfa1393a4810bbd6cc6ddadab6fb956"
+  },
+  {
+    "id": 42,
+    "kanji": "導入",
+    "hiragana": "どうにゅう",
+    "korean": "도입.",
+    "originalId": "3549fb6e7e8be500cb4d97d72c0c5bda"
+  },
+  {
+    "id": 43,
+    "kanji": "表示",
+    "hiragana": "ひょうじ",
+    "korean": "표시.",
+    "originalId": "e66d996053db9077aaa224bfe96e48c4"
+  },
+  {
+    "id": 44,
+    "kanji": "手順",
+    "hiragana": "てじゅん",
+    "korean": "수순; 순서; 절차.",
+    "originalId": "a03c25b8a77014b44ab403e7b2a77285"
+  },
+  {
+    "id": 45,
+    "kanji": "動作",
+    "hiragana": "どうさ",
+    "korean": "동작;  몸을 움직이는 것;  또, 그 움직임.",
+    "originalId": "3b3bfc6d8f44954f825f295719d6a6a9"
+  },
+  {
+    "id": 46,
+    "kanji": "変更",
+    "hiragana": "へんこう",
+    "korean": "변경; 새롭게 바꾸는 것.",
+    "originalId": "bc47b28e004bd9b8bdfe2c6a11d2db9a"
+  },
+  {
+    "id": 47,
+    "kanji": "操作",
+    "hiragana": "そうさ",
+    "korean": "조작.",
+    "originalId": "c723ca02f9535b0eb50d865101a3231f"
+  },
+  {
+    "id": 48,
+    "kanji": "選択",
+    "hiragana": "せんたく",
+    "korean": "선택.",
+    "originalId": "971a8c1e5e55191eb466900e3f33c52c"
+  },
+  {
+    "id": 49,
+    "kanji": "作業",
+    "hiragana": "さぎょう",
+    "korean": "작업.",
+    "originalId": "251f43fd37567249060dd75e6b033d93"
+  },
+  {
+    "id": 50,
+    "kanji": "稼働·稼動",
+    "hiragana": "かどう",
+    "korean": "가동.",
+    "originalId": "e49f0feb6ecabba3fe0cabbcf2c28d2e"
+  }
+]
