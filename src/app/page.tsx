@@ -7,7 +7,6 @@ interface WordData {
   kanji: string;
   hiragana: string;
   korean: string;
-  originalId: string;
 }
 
 export default function Home() {
@@ -18,6 +17,12 @@ export default function Home() {
   const [showKorean, setShowKorean] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const wordsPerPage = 50;
+
+  // 현재 페이지의 단어들만 필터링
+  const currentPageWords = words.slice((currentPage - 1) * wordsPerPage, currentPage * wordsPerPage);
+  const totalPages = Math.ceil(words.length / wordsPerPage);
 
   const showHiraganaAnswer = useCallback(() => {
     setShowHiragana(true);
@@ -44,14 +49,21 @@ export default function Home() {
 
   const nextWord = useCallback(() => {
     setCurrentIndex(prev => {
-      if (prev < words.length - 1) {
+      if (prev < currentPageWords.length - 1) {
         setShowHiragana(false);
         setShowKorean(false);
         return prev + 1;
       }
       return prev;
     });
-  }, [words.length]);
+  }, [currentPageWords.length]);
+
+  const goToPage = useCallback((page: number) => {
+    setCurrentPage(page);
+    setCurrentIndex(0);
+    setShowHiragana(false);
+    setShowKorean(false);
+  }, []);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     switch(e.key) {
@@ -119,7 +131,7 @@ export default function Home() {
     );
   }
 
-  const currentWord = words[currentIndex];
+  const currentWord = currentPageWords[currentIndex];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 to-blue-600">
@@ -129,6 +141,28 @@ export default function Home() {
           <h1 className="text-white text-4xl md:text-5xl font-bold mb-6 drop-shadow-lg">
             한자 단어장 암기 시스템
           </h1>
+          
+          {/* Page Navigation */}
+          <div className="flex justify-center items-center gap-2 mb-4 flex-wrap">
+            <button
+              onClick={() => goToPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="bg-white/20 border-2 border-white/30 text-white px-3 py-1 rounded-full hover:bg-white/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+            >
+              이전 페이지
+            </button>
+            <span className="text-white text-lg font-bold">
+              {currentPage} / {totalPages} 페이지
+            </span>
+            <button
+              onClick={() => goToPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="bg-white/20 border-2 border-white/30 text-white px-3 py-1 rounded-full hover:bg-white/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+            >
+              다음 페이지
+            </button>
+          </div>
+
           <div className="flex justify-center items-center gap-5 mb-4">
             <button
               onClick={previousWord}
@@ -138,11 +172,11 @@ export default function Home() {
               이전
             </button>
             <span className="text-white text-xl font-bold">
-              {currentIndex + 1} / {words.length}
+              {currentIndex + 1} / {currentPageWords.length} (전체: {words.length})
             </span>
             <button
               onClick={nextWord}
-              disabled={currentIndex === words.length - 1}
+              disabled={currentIndex === currentPageWords.length - 1}
               className="bg-white/20 border-2 border-white/30 text-white px-5 py-2 rounded-full hover:bg-white/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               다음
@@ -212,6 +246,9 @@ export default function Home() {
           <div className="bg-white/10 rounded-2xl p-4 text-white flex justify-around flex-wrap gap-4">
             <span className="text-lg font-bold">
               총 단어: {words.length}
+            </span>
+            <span className="text-lg font-bold">
+              현재 페이지: {currentPageWords.length}개
             </span>
             <span className="text-lg font-bold">
               학습 완료: {completedWords.size}
