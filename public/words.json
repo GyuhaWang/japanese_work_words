@@ -337,27 +337,27 @@
   },
   {
     "id": 57,
-    "kanji": "検索",
-    "hiragana": "けんさく",
-    "korean": "검색"
+    "kanji": "更新",
+    "hiragana": "こうしん",
+    "korean": "갱신"
   },
   {
     "id": 58,
-    "kanji": "重要",
-    "hiragana": "じゅうよう",
-    "korean": "중요"
-  },
-  {
-    "id": 59,
-    "kanji": "実行",
-    "hiragana": "じっこう",
-    "korean": "실행"
-  },
-  {
-    "id": 60,
     "kanji": "作成",
     "hiragana": "さくせい",
     "korean": "작성"
+  },
+  {
+    "id": 59,
+    "kanji": "備考",
+    "hiragana": "びこう",
+    "korean": "비고"
+  },
+  {
+    "id": 60,
+    "kanji": "比較",
+    "hiragana": "ひかく",
+    "korean": "비교"
   },
   {
     "id": 61,
@@ -385,9 +385,9 @@
   },
   {
     "id": 65,
-    "kanji": "並び順",
-    "hiragana": "ならびじゅん",
-    "korean": "배열순"
+    "kanji": "索引",
+    "hiragana": "さくいん",
+    "korean": "색인"
   },
   {
     "id": 66,
@@ -457,9 +457,9 @@
   },
   {
     "id": 77,
-    "kanji": "公開",
-    "hiragana": "こうかい",
-    "korean": "공개"
+    "kanji": "空白",
+    "hiragana": "くうはく",
+    "korean": "공백"
   },
   {
     "id": 78,
@@ -475,9 +475,9 @@
   },
   {
     "id": 80,
-    "kanji": "削除",
-    "hiragana": "さくじょ",
-    "korean": "삭제"
+    "kanji": "判断",
+    "hiragana": "はんだん",
+    "korean": "판단"
   },
   {
     "id": 81,
@@ -487,45 +487,45 @@
   },
   {
     "id": 82,
-    "kanji": "更新",
-    "hiragana": "こうしん",
-    "korean": "갱신"
+    "kanji": "検討",
+    "hiragana": "けんとう",
+    "korean": "검토"
   },
   {
     "id": 83,
-    "kanji": "継続",
-    "hiragana": "けいぞく",
-    "korean": "계속"
+    "kanji": "構築",
+    "hiragana": "こうちく",
+    "korean": "구축"
   },
   {
     "id": 84,
-    "kanji": "優先",
-    "hiragana": "ゆうせん",
-    "korean": "우선"
+    "kanji": "配置",
+    "hiragana": "はいち",
+    "korean": "배치"
   },
   {
     "id": 85,
-    "kanji": "配布",
-    "hiragana": "はいふ",
-    "korean": "배포"
+    "kanji": "状況",
+    "hiragana": "じょうきょう",
+    "korean": "상황"
   },
   {
     "id": 86,
-    "kanji": "複数",
-    "hiragana": "ふくすう",
-    "korean": "복수"
+    "kanji": "制御",
+    "hiragana": "せいぎょ",
+    "korean": "제어"
   },
   {
     "id": 87,
-    "kanji": "解決",
-    "hiragana": "かいけつ",
-    "korean": "해결"
+    "kanji": "統合",
+    "hiragana": "とうごう",
+    "korean": "통합"
   },
   {
     "id": 88,
-    "kanji": "追加",
-    "hiragana": "ついか",
-    "korean": "추가"
+    "kanji": "参考",
+    "hiragana": "さんこう",
+    "korean": "참고"
   },
   {
     "id": 89,
